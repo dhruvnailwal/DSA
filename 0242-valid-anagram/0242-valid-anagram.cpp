@@ -1,10 +1,22 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        sort(s.begin(),s.end());
-        sort(t.begin(),t.end());
+        vector<int> freq(26,0);
 
-        return s == t;
+        for(auto i : s){
+            freq[i - 'a']++;
+        }
+
+        for(auto i : t){
+            if(freq[i - 'a'] == 0) return false;
+            freq[i-'a']--;
+        }
+
+        for(auto i : freq){
+            if(i >= 1) return false;
+        }
+
+        return true;
     }
 };
 
