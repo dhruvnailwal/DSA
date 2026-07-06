@@ -1,0 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int height(TreeNode* root){
+        if(root == NULL) return 0;
+
+        int lh = height(root->left);
+        int rh = height(root->right);
+
+        if(lh == -1 || rh == -1) return -1;
+
+        else if(abs(lh-rh) > 1) return -1;
+
+        return 1+max(lh,rh);
+    }
+    bool isBalanced(TreeNode* root) {
+        if(height(root) != -1) return true;
+
+        return false;
+    }
+};
+
+// Synced seamlessly with LeetHub Pro
+// Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+// Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
