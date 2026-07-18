@@ -1,30 +1,16 @@
 class Solution {
   public:
-    vector<int> ans;
     
-    void solve(unordered_map<int,vector<int>> &adj , int V , vector<int> &indegree){
+    void solve(unordered_map<int,vector<int>> &adj , int u , vector<bool> &visited , stack<int> &st){
+        visited[u] = true;
         
-        queue<int> q;
-        
-        for(int i = 0 ; i < V ; i++){
-            if(indegree[i] == 0) {
-                q.push(i);
-                ans.push_back(i);
+        for(int v : adj[u]){
+            if(!visited[v]){
+                solve(adj,v,visited,st);
             }
         }
         
-        while(!q.empty()){
-            int u = q.front();
-            q.pop();
-            
-            for(auto v : adj[u]){
-                indegree[v]--;
-                if(indegree[v] == 0) {
-                    q.push(v);
-                    ans.push_back(v);
-                }
-            }
-        }
+        st.push(u);
     }
   
     vector<int> topoSort(int V, vector<vector<int>>& edges) {
@@ -32,17 +18,29 @@ class Solution {
         
         unordered_map<int,vector<int>> adj;
         
-        vector<int> indegree(V);
+        vector<bool> visited(V,false);
         
         for(auto i : edges){
             int u = i[0];
             int v = i[1];
             
             adj[u].push_back(v);
-            indegree[v]++;
         }
         
-        solve(adj,V,indegree);
+        stack<int> st;
+        vector<int> ans;
+        
+        for(int i = 0 ; i < V ; i++){
+            if(!visited[i]){
+                solve(adj,i,visited,st);
+            }
+        }
+        
+        
+        while(!st.empty()){
+            ans.push_back(st.top());
+            st.pop();
+        }
         
         return ans;
     }
