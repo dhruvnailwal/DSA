@@ -2,11 +2,12 @@ class Solution {
   public:
     vector<int> bfs(vector<vector<int>> &adj) {
         // code here
-        queue<int> q;
-        
         int n = adj.size();
         
         vector<bool> visited(n,false);
+         
+        queue<int> q;
+        
         vector<int> ans;
         
         q.push(0);
@@ -18,10 +19,10 @@ class Solution {
             q.pop();
             
             for(auto v : adj[u]){
-                if(!visited[v]) {
-                    visited[v] = true;
+                if(!visited[v]){
                     q.push(v);
                     ans.push_back(v);
+                    visited[v] = true;
                 }
             }
         }
