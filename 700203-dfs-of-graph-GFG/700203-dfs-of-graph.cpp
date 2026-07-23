@@ -4,12 +4,11 @@ class Solution {
     vector<int> ans;
     
     void solve(vector<vector<int>>& adj,int u ,vector<bool> &visited){
-        if(visited[u] == true) return;
         
         visited[u] = true;
         ans.push_back(u);
         
-        for(int v : adj[u]){
+        for(auto v : adj[u]){
             if(!visited[v]){
                 solve(adj,v,visited);
             }
@@ -20,7 +19,7 @@ class Solution {
         // Code here
         int n = adj.size();
         
-        vector<bool> visited(n,false);
+        vector<bool> visited(n , false);
         
         solve(adj,0,visited);
         
