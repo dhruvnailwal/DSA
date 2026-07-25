@@ -2,18 +2,23 @@ class Solution {
 public:
     int maxProduct(int n) {
         vector<int> v;
-
+        int first = 0;
+        int second = 0;
         while(n > 0){
             int rem = n % 10;
-            v.push_back(rem);
+            if(rem >= first){
+                second = first;
+                first = rem;
+            }
+
+            else if(rem < first && rem >= second){
+                second = rem;
+            }
+
             n /= 10;
         }
 
-        sort(v.begin(),v.end());
-
-        int s = v.size();
-
-        return v[s-1] * v[s-2];
+        return first*second;
     }
 };
 
