@@ -1,9 +1,10 @@
 class Solution {
 public:
-    bool toposort(int n, unordered_map<int, vector<int>>& adj , vector<int>& indegree) {
-        queue<int> q;
+    bool topo(int n, unordered_map<int, vector<int>> adj,
+              vector<int>& indegree) {
 
         int count = 0;
+        queue<int> q;
 
         for (int i = 0; i < n; i++) {
             if (indegree[i] == 0) {
@@ -16,7 +17,7 @@ public:
             int u = q.front();
             q.pop();
 
-            for (int v : adj[u]) {
+            for (auto v : adj[u]) {
                 indegree[v]--;
 
                 if (indegree[v] == 0) {
@@ -28,21 +29,22 @@ public:
 
         return count == n;
     }
-    bool canFinish(int n, vector<vector<int>>& arr) {
-        unordered_map<int, vector<int>> adj;
 
+    bool canFinish(int n, vector<vector<int>>& prerequisites) {
+        
+        unordered_map<int,vector<int>> adj;
         vector<int> indegree(n);
 
-        for (auto i : arr) {
+        for(auto i : prerequisites){
+            int u = i[0];
+            int v = i[1];
 
-            int u = i[1];
-            int v = i[0];
-
-            indegree[v]++;
-            adj[u].push_back(v);
+            adj[v].push_back(u);
+            indegree[u]++;
         }
 
-        return toposort(n, adj, indegree);
+        return topo(n,adj,indegree);
+
     }
 };
 
