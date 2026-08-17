@@ -12,6 +12,7 @@
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
+
         vector<int> ans;
         TreeNode* temp = root;
 
@@ -20,7 +21,6 @@ public:
                 ans.push_back(temp->val);
                 temp = temp->right;
             }
-
             else{
                 TreeNode* leftchild = temp->left;
 
