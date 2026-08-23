@@ -12,12 +12,11 @@
 class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
-        map<int,vector<int>> mp;
+        vector<vector<int>> ans;
 
-        queue<pair<TreeNode*,int>> q;
+        if(root == NULL) return ans;
 
-        if(root == NULL) return {};
-
+        queue<pair<TreeNode* , int>> q;
         q.push({root,0});
 
         while(!q.empty()){
@@ -27,20 +26,18 @@ public:
             TreeNode* temp = it.first;
             int level = it.second;
 
-            mp[level].push_back(temp->val);
+            if(ans.size() <= level) ans.push_back({});
+
+            ans[level].push_back(temp->val);
 
             if(temp->left){
-                q.push({temp->left,level+1});
+                q.push({temp->left , level + 1});
             }
+            
             if(temp->right){
-                q.push({temp->right,level+1});
+                q.push({temp->right,level +1 });
             }
-        }
-
-        vector<vector<int>> ans;
-
-        for(auto it : mp){
-            ans.push_back(it.second);
+            
         }
 
         return ans;
