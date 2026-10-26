@@ -1,48 +1,45 @@
 class Solution {
 public:
 
-    void solve(vector<vector<int>>& grid , int i , int j , vector<vector<bool>> &visited , int delrow[] , int delcol[] , int k , long long &ans){
-
+    void solve(vector<vector<int>>& grid , int i , int j , int row[] , int col[] , vector<vector<bool>> &visited , long long &sum ){
         visited[i][j] = true;
+        sum += grid[i][j];
 
         int n = grid.size();
         int m = grid[0].size();
-        ans += grid[i][j];
 
-        for(int k = 0 ; k < 4 ; k++){
-            int nr = i + delrow[k];
-            int nc = j + delcol[k];
+        for(int x = 0 ; x < 4 ; x++){
+            int nr = i + row[x];
+            int nc = j + col[x];
 
             if(nr >= 0 && nr < n && nc >= 0 && nc < m && !visited[nr][nc] && grid[nr][nc] != 0){
-                solve(grid,nr,nc,visited,delrow,delcol,k,ans);
+                solve(grid,nr,nc,row,col,visited,sum);
             }
         }
-
     }
+
     int countIslands(vector<vector<int>>& grid, int k) {
+        int ans = 0;
+
         int n = grid.size();
         int m = grid[0].size();
 
-        vector<vector<bool>> visited(n , vector<bool> (m , false));
+        vector<vector<bool>> visited(n , vector<bool>(m , false));
 
-        int delrow[] = {-1 , 0 , 1 , 0};
-        int delcol[] = {0 , 1 , 0 , -1};
-
-        int count = 0;
+        int row[] = {-1 , 0 , 1 , 0};
+        int col[] = {0 , 1 , 0 , -1};
 
         for(int i = 0 ; i < n ; i++){
             for(int j = 0 ; j < m ; j++){
+                long long sum = 0;
                 if(!visited[i][j] && grid[i][j] != 0){
-                    long long ans = 0;
-
-                    solve(grid,i,j,visited,delrow,delcol,k,ans);
-
-                    if(ans % k == 0) count++;
+                    solve(grid,i,j,row,col,visited,sum);
+                    if(sum % k == 0) ans++;
                 }
             }
         }
 
-        return count;
+        return ans ;
     }
 };
 
