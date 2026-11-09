@@ -8,15 +8,15 @@ public:
         }
 
         for(auto i : t){
-            if(freq[i - 'a'] == 0) return false;
-            freq[i-'a']--;
+            freq[i - 'a']--;
         }
 
         for(auto i : freq){
-            if(i >= 1) return false;
+            if(i != 0) return false;
         }
 
         return true;
+
     }
 };
 
