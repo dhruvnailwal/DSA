@@ -1,33 +1,29 @@
 class Solution {
 public:
     int minSetSize(vector<int>& arr) {
+        priority_queue<int , vector<int> > pq;
+
         map<int,int> mp;
 
         for(auto i : arr){
             mp[i]++;
         }
 
-        priority_queue<pair<int,int> , vector<pair<int,int>>> pq;
-
         for(auto it : mp){
-            pq.push({it.second,it.first});
+            pq.push(it.second);
         }
 
         int n = arr.size();
         int org = n;
-
         int ans = 0;
 
-        while(n > (org/2)){
-            auto it = pq.top();
+        while(2 * n > org){
+            n -= pq.top();
             pq.pop();
-
-            n -= it.first;
             ans++;
         }
 
         return ans;
-
     }
 };
 
